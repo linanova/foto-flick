@@ -1,0 +1,37 @@
+body {
+  margin: 20;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.status {
+  margin: 15px;
+}
+
+.tile {
+  background-color: transparent;
+  border: 0;
+  height: 132px;
+  width: 132px;
+}
+.tile:focus {
+  outline: none;
+}
+
+.board {
+  height: 396px;
+  width: 396px;
+  position: relative;
+}
+.full-image {
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  height: 396px;
+  width: 396px;
+  opacity: 0.2;
+}
