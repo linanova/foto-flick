@@ -25,6 +25,7 @@ class Tile extends React.Component {
 class Board extends React.Component {
   renderTile(i) {
     return (<Tile
+      key={i}
       correctPosition={this.props.tiles[i]}
       onClick={() => this.props.onClick(i)}
       image={this.props.image}
