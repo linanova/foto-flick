@@ -81,7 +81,7 @@ class Game extends React.Component {
           height: photo.height_z || photo.height_o }
         });
     }
-    xhttp.open("GET", "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=da997692cbca69a5a6d9c8fc210061a2&extras=url_z%2C+url_o&per_page=1&format=json&nojsoncallback=1");
+    xhttp.open("GET", "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=ff9496e0e983b050641d2dd10fefcc37&extras=url_z%2C+url_o&per_page=1&format=json&nojsoncallback=1");
     xhttp.send();
   }
 
