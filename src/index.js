@@ -23,6 +23,33 @@ class Tile extends React.Component {
 }
 
 class Board extends React.Component {
+  renderTile(i) {
+    return (<Tile
+      correctPosition={this.props.tiles[i]}
+      onClick={() => this.props.onClick(i)}
+      image={this.props.image}
+    />);
+  }
+
+  render() {
+    let tiles = []
+    for (let pos = 0; pos < 9; pos++) {
+      tiles.push(this.renderTile(pos))
+    }
+
+    const style = getImageStyle(this.props.image);
+    return (
+      <div>
+        <div className="board">
+          {tiles}
+          <div className="full-image" style={style}></div>
+        </div>
+      </div>
+    );
+  }
+}
+
+class Game extends React.Component {
   constructor() {
       super();
 
@@ -35,20 +62,24 @@ class Board extends React.Component {
         hole: HOLE_POSITION,
         image: {},
       };
+
       this.getImage();
   }
 
   getImage() {
     let xhttp = new XMLHttpRequest();
     xhttp.onload = () => {
-        const obj = JSON.parse(xhttp.response);
-        let photo = obj.photos.photo[0]
-        this.setState(
-          {image: {
-            url: photo.url_z || photo.url_o,
-            width: photo.width_z || photo.width_o,
-            height: photo.height_z || photo.height_o }
-          });
+      const obj = JSON.parse(xhttp.response);
+      let photo = obj.photos.photo[0]
+
+      // try to use a medium size of the image (640 on the longest size)
+      // if unavailable, use the original image size
+      this.setState(
+        {image: {
+          url: photo.url_z || photo.url_o,
+          width: photo.width_z || photo.width_o,
+          height: photo.height_z || photo.height_o }
+        });
     }
     xhttp.open("GET", "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=da997692cbca69a5a6d9c8fc210061a2&extras=url_z%2C+url_o&per_page=1&format=json&nojsoncallback=1");
     xhttp.send();
@@ -69,14 +100,6 @@ class Board extends React.Component {
     this.setState({tiles: tiles, hole: i});
   }
 
-  renderTile(i) {
-    return (<Tile
-      correctPosition={this.state.tiles[i]}
-      onClick={() => this.handleClick(i)}
-      image={this.state.image}
-    />);
-  }
-
   render() {
     const complete = isComplete(this.state.tiles);
     let status
@@ -86,32 +109,17 @@ class Board extends React.Component {
       status = "Move the Blocks to Complete the Puzzle!"
     }
 
-    let tiles = []
-    for (let pos = 0; pos < 9; pos++) {
-      tiles.push(this.renderTile(pos))
-    }
-
-    const style = getImageStyle(this.state.image);
-    return (
-      <div>
-        <div className="status">{status}</div>
-        <div className="board">
-          {tiles}
-          <div className="full-image" style={style}></div>
-        </div>
-      </div>
-    );
-  }
-}
-
-class Game extends React.Component {
-  render() {
     return (
       <div className="game">
-        <div className="game-board">
-          <Board />
-        </div>
         <div className="game-info">
+          {status}
+        </div>
+        <div className="game-board">
+          <Board
+            tiles={this.state.tiles}
+            image={this.state.image}
+            onClick={i => this.handleClick(i)}
+          />
         </div>
       </div>
     );
@@ -130,10 +138,10 @@ ReactDOM.render(
  * @param {Array} a The array to shuffle.
  */
 function shuffle(a) {
-    for (let i = a.length; i; i--) {
-        let j = Math.floor(Math.random() * i);
-        [a[i - 1], a[j]] = [a[j], a[i - 1]];
-    }
+  for (let i = a.length; i; i--) {
+    let j = Math.floor(Math.random() * i);
+    [a[i - 1], a[j]] = [a[j], a[i - 1]];
+  }
 }
 
 /**
@@ -142,8 +150,8 @@ function shuffle(a) {
 * @param {Number} hole The current position of the hole.
 */
 function isAdjacent(tile, hole) {
-    return tile === hole - 1 || tile === hole + 1 ||
-            tile === hole - 3 || tile === hole + 3
+  return tile === hole - 1 || tile === hole + 1 ||
+          tile === hole - 3 || tile === hole + 3
 }
 
 /**
@@ -155,9 +163,9 @@ function isComplete(tiles) {
   // Puzzle is complete when each tile value (correct position)
   // equals the tile index (current position)
   for (let i = 0; i < tiles.length - 1; i++) {
-      if (tiles[i] !== i) {
-          return false;
-      }
+    if (tiles[i] !== i) {
+      return false;
+    }
   }
   return true
 }
