@@ -1,35 +1,26 @@
-body {
-  font-family: sans-serif;
+.game .title {
+  font-family: 'Pacifico', cursive;
+  font-size: 6rem;
 }
 
-.game-info {
-  margin: 15px;
-}
-
-.tile {
+.puzzle-block {
   background-color: transparent;
   border: 0;
   height: 132px;
   width: 132px;
+  position: relative;
+  float: left;
+  z-index: 10;
 }
-.tile:focus {
+.puzzle-block:focus {
   outline: none;
 }
 
-.board {
+.game-board .board {
   height: 396px;
   width: 396px;
   position: relative;
 }
 .full-image {
-  content: "";
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;
-  height: 396px;
-  width: 396px;
   opacity: 0.2;
 }

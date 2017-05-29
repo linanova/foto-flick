@@ -1,19 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'bulma/css/bulma.css'
 
 const HOLE_POSITION = 8;
 
-class Tile extends React.Component {
+class Block extends React.Component {
   render() {
 
-    // the hole tile should not have any background style
+    // the hole block should not have any background style
     const style = this.props.correctPosition !== HOLE_POSITION
       ? getImageStyle(this.props.image, this.props.correctPosition)
       : {};
     return (
       <button
-        className="tile"
+        className="puzzle-block"
         onClick={this.props.onClick}
         style={style}
       >
@@ -23,29 +24,29 @@ class Tile extends React.Component {
 }
 
 class Board extends React.Component {
-  renderTile(i) {
-    return (<Tile
+  renderBlock(i) {
+    return (<Block
       key={i}
-      correctPosition={this.props.tiles[i]}
+      correctPosition={this.props.blocks[i]}
       onClick={() => this.props.onClick(i)}
       image={this.props.image}
     />);
   }
 
   render() {
-    let tiles = []
+    let blocks = []
     for (let pos = 0; pos < 9; pos++) {
-      tiles.push(this.renderTile(pos))
+      blocks.push(this.renderBlock(pos))
     }
 
     const style = getImageStyle(this.props.image);
     return (
-      <div>
-        <div className="board">
-          {tiles}
-          <div className="full-image" style={style}></div>
+
+        <div className="board container">
+          <div className="full-image is-overlay" style={style}></div>
+          {blocks}
         </div>
-      </div>
+
     );
   }
 }
@@ -59,7 +60,7 @@ class Game extends React.Component {
       positions.push(HOLE_POSITION)
 
       this.state = {
-        tiles: positions,
+        blocks: positions,
         hole: HOLE_POSITION,
         image: {},
       };
@@ -91,18 +92,18 @@ class Game extends React.Component {
       return;
     }
 
-    const tiles = this.state.tiles.slice();
-    if (isComplete(tiles)) {
+    const blocks = this.state.blocks.slice();
+    if (isComplete(blocks)) {
       return;
     }
 
-    tiles[this.state.hole] = tiles[i];
-    tiles[i] = HOLE_POSITION;
-    this.setState({tiles: tiles, hole: i});
+    blocks[this.state.hole] = blocks[i];
+    blocks[i] = HOLE_POSITION;
+    this.setState({blocks: blocks, hole: i});
   }
 
   render() {
-    const complete = isComplete(this.state.tiles);
+    const complete = isComplete(this.state.blocks);
     let status
     if (complete) {
       status = 'Good Job!'
@@ -112,16 +113,15 @@ class Game extends React.Component {
 
     return (
       <div className="game">
-        <div className="game-info">
-          {status}
-        </div>
-        <div className="game-board">
+        <div className="title section has-text-centered"> foto flick </div>
+        <div className="game-board hero is-primary">
           <Board
-            tiles={this.state.tiles}
+            blocks={this.state.blocks}
             image={this.state.image}
             onClick={i => this.handleClick(i)}
           />
         </div>
+        <div className="game-info section has-text-centered"> {status} </div>
       </div>
     );
   }
@@ -146,25 +146,25 @@ function shuffle(a) {
 }
 
 /**
-* Checks if tile position is adjacent to hole position on the board.
-* @param {Number} tile The current position of the tile to check.
+* Checks if block position is adjacent to hole position on the board.
+* @param {Number} block The current position of the block to check.
 * @param {Number} hole The current position of the hole.
 */
-function isAdjacent(tile, hole) {
-  return tile === hole - 1 || tile === hole + 1 ||
-          tile === hole - 3 || tile === hole + 3
+function isAdjacent(block, hole) {
+  return block === hole - 1 || block === hole + 1 ||
+          block === hole - 3 || block === hole + 3
 }
 
 /**
-* Checks if all the tiles are in the correct position.
-* @param {Array} tiles The array describing the current position of tiles.
+* Checks if all the blocks are in the correct position.
+* @param {Array} blocks The array describing the current position of blocks.
 * @returns {Boolean} True if the puzzle is complete.
 */
-function isComplete(tiles) {
-  // Puzzle is complete when each tile value (correct position)
-  // equals the tile index (current position)
-  for (let i = 0; i < tiles.length - 1; i++) {
-    if (tiles[i] !== i) {
+function isComplete(blocks) {
+  // Puzzle is complete when each block value (correct position)
+  // equals the block index (current position)
+  for (let i = 0; i < blocks.length - 1; i++) {
+    if (blocks[i] !== i) {
       return false;
     }
   }
@@ -172,16 +172,16 @@ function isComplete(tiles) {
 }
 
 /**
-* Computes style for the image properties and tile position given.
+* Computes style for the image properties and block position given.
 * @param {Object} image The image properties - url, width, height.
-* @param {Number} correctPosition If defining style for a tile, specifies the correct position of that tile in the original image.
+* @param {Number} correctPosition If defining style for a block, specifies the correct position of that block in the original image.
 * @returns {Object} The computed style.
 */
 function getImageStyle(image, correctPosition) {
   let xOffset = 0
   let yOffset = 0
 
-  // if no position was specified, we are not dealing with a tile
+  // if no position was specified, we are not dealing with a block
   // so we don't need to adjust the image offset
   if (correctPosition !== undefined) {
     xOffset = (correctPosition % 3) * (-132);
