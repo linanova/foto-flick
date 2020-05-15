@@ -8,8 +8,8 @@
     "react-dom": "^15.5.4"
   },
   "devDependencies": {
-    "react-scripts": "1.0.5",
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "react-scripts": "^3.4.1"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -19,5 +19,17 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://linanova.github.io/foto-flick"
+  "homepage": "https://linanova.github.io/foto-flick",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
