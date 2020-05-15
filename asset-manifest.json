@@ -1,6 +1,25 @@
 {
-  "main.css": "static/css/main.d44ad38f.css",
-  "main.css.map": "static/css/main.d44ad38f.css.map",
-  "main.js": "static/js/main.5c97a24d.js",
-  "main.js.map": "static/js/main.5c97a24d.js.map"
+  "files": {
+    "main.css": "/foto-flick/static/css/main.5f9d4977.chunk.css",
+    "main.js": "/foto-flick/static/js/main.113dad88.chunk.js",
+    "main.js.map": "/foto-flick/static/js/main.113dad88.chunk.js.map",
+    "runtime-main.js": "/foto-flick/static/js/runtime-main.67d19f07.js",
+    "runtime-main.js.map": "/foto-flick/static/js/runtime-main.67d19f07.js.map",
+    "static/css/2.344b70e2.chunk.css": "/foto-flick/static/css/2.344b70e2.chunk.css",
+    "static/js/2.4e853281.chunk.js": "/foto-flick/static/js/2.4e853281.chunk.js",
+    "static/js/2.4e853281.chunk.js.map": "/foto-flick/static/js/2.4e853281.chunk.js.map",
+    "index.html": "/foto-flick/index.html",
+    "precache-manifest.26fdaad7c6df38271070de602bda426b.js": "/foto-flick/precache-manifest.26fdaad7c6df38271070de602bda426b.js",
+    "service-worker.js": "/foto-flick/service-worker.js",
+    "static/css/2.344b70e2.chunk.css.map": "/foto-flick/static/css/2.344b70e2.chunk.css.map",
+    "static/css/main.5f9d4977.chunk.css.map": "/foto-flick/static/css/main.5f9d4977.chunk.css.map",
+    "static/js/2.4e853281.chunk.js.LICENSE.txt": "/foto-flick/static/js/2.4e853281.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.67d19f07.js",
+    "static/css/2.344b70e2.chunk.css",
+    "static/js/2.4e853281.chunk.js",
+    "static/css/main.5f9d4977.chunk.css",
+    "static/js/main.113dad88.chunk.js"
+  ]
 }
