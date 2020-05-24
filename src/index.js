@@ -4,6 +4,8 @@ import './index.css';
 import 'bulma/css/bulma.css'
 
 const HOLE_POSITION = 8;
+const PUZZLE_PIXEL_SIZE = 132;
+const PUZZEL_BLOCK_SIZE = 3;
 
 class Block extends React.Component {
   render() {
@@ -151,8 +153,13 @@ function shuffle(a) {
 * @param {Number} hole The current position of the hole.
 */
 function isAdjacent(block, hole) {
-  return block === hole - 1 || block === hole + 1 ||
-          block === hole - 3 || block === hole + 3
+  let verticallyAdjacent = block === hole - PUZZEL_BLOCK_SIZE || block === hole + PUZZEL_BLOCK_SIZE
+
+  let holeIsLeftmost = hole % PUZZEL_BLOCK_SIZE === 0
+  let holeIsRightmost = hole % PUZZEL_BLOCK_SIZE === PUZZEL_BLOCK_SIZE - 1
+  let horizontallyAdjacent = (!holeIsLeftmost && block === hole - 1) || (!holeIsRightmost && block === hole + 1)
+
+  return horizontallyAdjacent || verticallyAdjacent
 }
 
 /**
@@ -184,8 +191,8 @@ function getImageStyle(image, correctPosition) {
   // if no position was specified, we are not dealing with a block
   // so we don't need to adjust the image offset
   if (correctPosition !== undefined) {
-    xOffset = (correctPosition % 3) * (-132);
-    yOffset = Math.trunc(correctPosition/3) * (-132);
+    xOffset = (correctPosition % PUZZEL_BLOCK_SIZE) * (-PUZZLE_PIXEL_SIZE);
+    yOffset = Math.trunc(correctPosition/PUZZEL_BLOCK_SIZE) * (-PUZZLE_PIXEL_SIZE);
   }
 
   const size = image.width < image.height ? '396px auto' : 'auto 396px';
